@@ -1,13 +1,12 @@
-
 import java.util.Properties
 import java.io.FileInputStream
 
 
-val localProperties =  Properties()
+val localProperties = Properties()
 val localPropertiesFile = rootProject.file("local.properties")
 
 if (localPropertiesFile.exists()) {
-    localProperties.load( FileInputStream(localPropertiesFile))
+    localProperties.load(FileInputStream(localPropertiesFile))
 } else {
     println("local.properties not found!")
 }
@@ -35,8 +34,10 @@ android {
         buildConfigField("String", "OPENWEATHER_API_KEY", "\"$apiKey\"")
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
+        dataBinding = true
+        buildConfig = true
     }
 
     buildTypes {
@@ -64,34 +65,35 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:3.0.0")
-    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    // Retrofit & converter
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
 // OkHttp
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor.v4120)
 
-// Lifecycle (ViewModel + LiveData)
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+// Lifecycle (MVVM)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v262)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx.v262)
+    implementation(libs.androidx.lifecycle.livedata.ktx.v262)
 
 // Gson
-    implementation("com.google.code.gson:gson:2.10.1") // bản mới nhất thay vì 2.9.1
+    implementation(libs.gson.v2101)
 
-// WeatherView (hiệu ứng mưa tuyết)
-    implementation("com.github.MatteoBattilana:WeatherView:3.0.0")
 
-// ViewModel + Activity KTX
-    implementation("androidx.activity:activity-ktx:1.8.0") // bạn đang dùng 1.4.0, nên nâng cấp
+// Activity + ViewModel KTX
+    implementation(libs.androidx.activity.ktx.v180)
 
-// BlurView (làm mờ nền)
-    implementation("com.github.Dimezis:BlurView:version-2.0.3")
+// BlurView
+      implementation(libs.blurview.vversion206)
 
-// Glide (tải ảnh)
-    implementation("com.github.bumptech.glide:glide:4.12.0")
+    // WeatherView (mưa/tuyết)
+  //   implementation(libs.weatherview)
+
+
+// Glide
+    implementation(libs.glide.v4151)
 
 }
 
